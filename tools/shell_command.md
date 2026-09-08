@@ -117,7 +117,7 @@ the final answer to the user.
 Create another Markdown file in this directory with the same four sections:
 `# Tool: name`, `## Handler`, `## Description`, and `## Parameters`. The
 parameters section must contain a JSON Schema object. Then add a Python handler
-with the matching name to `HANDLERS` in `llm_chat.py`. The Markdown file is the
+with the matching name to `HANDLERS` in `krubot.py`. The Markdown file is the
 tool's public contract sent to the model; the Python handler is the local
 implementation. Keep handlers small, validate every argument, capture output,
 and return JSON that the model can interpret.
