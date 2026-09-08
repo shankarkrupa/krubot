@@ -1,3 +1,5 @@
+# krubot
+A simple handy bot to execute command and process the results in Termux/Android
 # Interactive OpenAI-Compatible Tool Chat
 
 `krubot.py` starts an interactive chat session against any endpoint that
@@ -85,3 +87,5 @@ The endpoint receives a JSON POST like:
 The response must provide `choices[0].message`, including standard
 `tool_calls` entries when it wants to run a tool. This supports OpenAI-style
 providers and local servers that implement the same Chat Completions format.
+
+
