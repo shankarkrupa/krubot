@@ -1,0 +1,5 @@
+{
+        "LLM_API_KEY": "-",
+        "LLM_BASE_URL": "NASSERVER:PORT",
+        "LLM_MODEL": "qwen354b-128k"
+}
