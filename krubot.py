@@ -24,11 +24,13 @@ from urllib.request import Request, urlopen
 DEFAULT_BASE_URL = "http://NASSERVER3:PORT/v1"
 DEFAULT_TIMEOUT_SECONDS = 120
 DEFAULT_MAX_TOOL_OUTPUT_CHARS = 12_000
-MAX_TOOL_ROUNDS = 8
+MAX_TOOL_ROUNDS = 20
 SYSTEM_PROMPT = (
     "You are a helpful assistant. You may use the provided tools when they are "
     "useful. After using a tool, answer the user using the tool result. Never "
     "claim that a tool succeeded unless its result confirms that it did."
+    "Read the .md files inside the 'skills' folder to learn how to use the available tools. Remember to save your learnings here when needed."
+    "Use the only the 'working' folder if any temporary files are to be created for processing information"
 )
 
 
@@ -167,6 +169,7 @@ def execute_shell_command(arguments: dict[str, Any], context: ToolContext) -> st
     timeout = min(float(timeout), 900.0)
 
     try:
+        print(f"Executing {command}")
         completed = subprocess.run(
             command,
             shell=True,
@@ -216,6 +219,7 @@ class OpenAICompatibleClient:
 
     @staticmethod
     def _make_endpoint(base_url: str) -> str:
+        print(base_url)
         endpoint = base_url.rstrip("/")
         if not endpoint.endswith("/chat/completions"):
             endpoint += "/chat/completions"
@@ -364,13 +368,13 @@ def main() -> int:
     print(f"Interactive chat using {args.model}. Type /help for commands; /exit to quit.")
     while True:
         try:
-            prompt = input("You: ").strip()
+            prompt = input("\033[95mYou:\033[0m ").strip()
         except (EOFError, KeyboardInterrupt):
             print()
             break
         if not prompt:
             continue
-        if prompt in {"/exit", "/quit"}:
+        if prompt in {"/exit", "/quit", "exit"}:
             break
         if prompt == "/help":
             print("Enter a prompt. /reset clears conversation history. /exit quits.")
@@ -387,10 +391,11 @@ def main() -> int:
             messages.pop()
             print(f"Request failed: {exc}", file=sys.stderr)
             continue
-        print(f"Assistant: {answer}")
+        print(f"\033[92mAssistant:\033[0m {answer}")
 
     return 0
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
