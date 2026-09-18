@@ -1,5 +1,6 @@
 # krubot
-A simple handy bot to execute command and process the results in Termux/Android
+A simple handy assistant/harness that works by executing commands and processing the results in Termux/Android environments
+
 # Interactive OpenAI-Compatible Tool Chat
 
 `krubot.py` starts an interactive chat session against any endpoint that
@@ -13,20 +14,9 @@ Set the endpoint credentials in the environment. `LLM_BASE_URL` should be the
 API root, such as `https://api.openai.com/v1`; a URL that already ends in
 `/chat/completions` is also accepted.
 
+# In Termux - defaults to executing commands without approval
 ```sh
-export LLM_API_KEY="your-api-key"
-export LLM_BASE_URL="https://api.openai.com/v1"
-export LLM_MODEL="gpt-4o-mini"
-python krubot.py
-```
-
-On Windows PowerShell:
-
-```powershell
-$env:LLM_API_KEY = "your-api-key"
-$env:LLM_BASE_URL = "https://api.openai.com/v1"
-$env:LLM_MODEL = "gpt-4o-mini"
-python .\krubot.py
+sh krubot.sh
 ```
 
 The client also accepts `OPENAI_API_KEY` as a fallback. A compatible local
@@ -68,9 +58,9 @@ it in `HANDLERS` in `krubot.py`. The initial `tools/shell_command.md` contains
 the full shell-tool contract, portability notes, safety guidance, examples, and
 the extension instructions.
 
-The model can request a maximum of eight tool rounds for one user prompt. Shell
+The model can request a maximum of 20 tool rounds for one user prompt. Shell
 output is bounded before it is added to the conversation so a command cannot
-consume the entire model context.
+consume the entire model context, configurable through the `MAX_TOOL_ROUNDS` variable in krubot.py.
 
 ## Endpoint compatibility
 
